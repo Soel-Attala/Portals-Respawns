@@ -34,12 +34,22 @@ public class Colisiones : MonoBehaviour
         {
             ReducirEscalaJugador();
             Debug.Log("colisionaste con el portal");
+            if(localScale = Vector3(0.5f, 0.5f, 0.5f))
+            {
+                RestaurarEscala();
+            }
 
         }
         
         void ReducirEscalaJugador() 
         {
             transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        }
+
+        void RestaurarEscala()
+        {
+            transform.localScale = escalaInicial;
+
         }
 
 
