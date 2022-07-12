@@ -2,13 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class BumpWall : MonoBehaviour
 {
     Vector3 posInicial;
+    public float tiempo = 2f;
+    int numeroRandom = 0;
+    public float tiempoRestante;
+   
+
+   
 
     void Start()
     {
-        posInicial = transform.position;
+        posInicial = transform.position;       
+        RestearTemporizador();
     }
 
     // Update is called once per frame
@@ -19,17 +28,31 @@ public class BumpWall : MonoBehaviour
 
     void MoverPared()
     {
-        posInicial = transform.position = new Vector3(-0.4f, 8.265f, 10);
+        numeroRandom = Random.Range(0, 20);
+        posInicial = transform.position = new Vector3(numeroRandom, numeroRandom, numeroRandom);
     }
 
-    void OnTriggerEnter(Collider col)
+    void OnTriggerStay(Collider col)
     {
         if (col.transform.gameObject.name == "Player")
         {
+            Temporizador();
+        }      
+    }
+ 
+    void Temporizador()
+    {
+        tiempoRestante -= Time.deltaTime;
+        if(tiempoRestante <= 0)
+        {
             MoverPared();
+            RestearTemporizador();
         }
+    }
 
-               
+    void RestearTemporizador()
+    {
+        tiempoRestante = tiempo;
     }
 
 
