@@ -5,11 +5,13 @@ using UnityEngine;
 public class ColisionesJugador : MonoBehaviour
 {
     Vector3 escalaInicial;
+    Vector3 nuevaEscala;
      
 
     void Start()
     {
-        escalaInicial = transform.localScale;
+        escalaInicial = transform.localScale = new Vector3(1,1,1);
+        nuevaEscala = escalaInicial;
     }
 
     // Update is called once per frame
@@ -18,40 +20,40 @@ public class ColisionesJugador : MonoBehaviour
        
     }
 
-
-
-    void OnTriggerEnter(Collider col)
-    {
-        if (col.transform.gameObject.name == "BumpWall")
-        {
-            Debug.Log("colisione con la pared dorada");
-
-        }
-
-        if (col.transform.gameObject.name == "Floor")
-        {
-            Debug.Log("colisionaste con el piso");
-        }       
-    }
-
     void OnTriggerExit(Collider col)
     {
         if (col.transform.gameObject.name == "ShrinkerWall")
         {
-            ReducirEscala();
             Debug.Log("colisionaste con el portal");
+
+            if(nuevaEscala == escalaInicial)
+            {
+                ReducirEscala();
+            }
+
+            if (col.transform.gameObject.name == "BumpWall")
+            {
+                Debug.Log("colisione con la pared dorada");
+
+            }
+
+            if (nuevaEscala != escalaInicial)
+            {
+                RestaurarEscala();
+            }
         }
     }
+    
 
 
 
     void ReducirEscala()
     {
-        transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        nuevaEscala = transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
     }
 
     void RestaurarEscala()
     {
-        transform.localScale = escalaInicial;
+        nuevaEscala = transform.localScale = new Vector3(1, 1, 1);
     }
 }
